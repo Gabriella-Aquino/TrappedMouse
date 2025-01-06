@@ -1,9 +1,9 @@
 #include <iostream>
 #include "includes/file_utils.h"
-#include <vector>
+
 #include "includes/stack.h"
 // #include <windows.h>
-#include <string>
+
 #include <chrono>
 #include "includes/maze.h"
 
@@ -37,8 +37,10 @@ int main()
     // }
     // cout << "entryPos struct: " << maze_file.entryPos.first << ", " << maze_file.entryPos.second << endl; //certo
     // cout << "exitPos struct: " << maze_file.exitPos.first << ", " << maze_file.exitPos.second << endl; //certo
-    maze.printMazeFile();
+    // maze.printMazeFile();
+    maze.printMaze();
     maze.exitMaze();
+    // maze.printMaze();
 
     auto end = high_resolution_clock::now();
     auto duration = duration_cast<milliseconds>(end - start);

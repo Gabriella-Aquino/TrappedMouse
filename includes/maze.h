@@ -3,7 +3,6 @@
 
 #include <vector>
 #include <string>
-#include <tuple>
 #include "stack.h"
 
 using namespace std;
@@ -16,7 +15,6 @@ private:
   int num_cols, num_rows;
   Stack<Cell> moves; //mazeStack
   vector<string> maze;
-  // vector<pair<int, int>> visited;
 
 public:
   Maze(vector<string> maze, pair<int, int>pos_entry, pair<int, int> pos_exit, int num_cols, int num_rows);
@@ -26,6 +24,7 @@ public:
   void exitMaze();
   bool findPath(Cell current_cell);
   void printMazeFile();
+  void printMaze();
 };
 
 Maze::Maze(vector<string> maze, pair<int, int>pos_entry, pair<int, int> pos_exit, int num_cols, int num_rows)
@@ -47,8 +46,6 @@ vector<string> Maze::getMaze(){
 }
 
 void Maze::printMazeFile(){
-  cout << "MAZE:" << endl;
-  pair<int, int> exit;
   for (const auto &linha : maze)
     {
       for (char character : linha)
@@ -76,14 +73,14 @@ bool Maze::findPath(Cell current_cell){
     bool is_visited = maze[new_line][new_column] == visited;
     new_cell = {new_line, new_column};
 
-    cout<< "current_cell: " << current_cell.getY() <<", " << current_cell.getX() << " ---- " <<maze[current_cell.getY()][current_cell.getX()] << endl;
-    cout << "posicao em analise: " << new_line << ", " << new_column << " ---- " << maze[new_line][new_column] << endl;
+    // cout<< "current_cell: " << current_cell.getY() <<", " << current_cell.getX() << " ---- " <<maze[current_cell.getY()][current_cell.getX()] << endl;
+    // cout << "posicao em analise: " << new_line << ", " << new_column << " ---- " << maze[new_line][new_column] << endl;
 
     if(is_path && !is_visited){
       maze[current_cell.getY()][current_cell.getX()] = visited;
       Cell next_cell(new_column, new_line);
       moves.push(next_cell);
-      cout << "entrou no if: " << next_cell.getY() << ", " << next_cell.getX() << endl;
+      // cout << "entrou no if: " << next_cell.getY() << ", " << next_cell.getX() << endl;
 
       if(findPath(next_cell)){
         return true;
@@ -94,6 +91,36 @@ bool Maze::findPath(Cell current_cell){
   }
   return false;
 }
+
+void Maze::printMaze(){
+  char wall_print='#', passage_print=' ', visited_print='.', mouse_print='o'; 
+  cout << "MAZE:" << endl;
+  // cout << num_rows << ", " << num_cols << endl;
+  for (int row = 0; row < num_rows; row++)
+    {
+      for (int col = 0; col < num_cols; col++)
+      {
+        if(maze[row][col] == wall){
+          cout << wall_print;
+        }
+        else if(maze[row][col] == passage){
+          cout << passage_print;
+        }
+        else if(maze[row][col] == visited){
+          cout << visited_print;
+        }
+        else if(maze[row][col] == 'm'){//não é isso
+          cout << mouse_print;
+        } 
+        else{
+          cout << maze[row][col];
+        }
+        
+      }
+      cout << endl;
+    }
+}
+
 //Stack<Cell> Maze::exitMaze()
 void Maze::exitMaze(){
   if(findPath(current_cell)){

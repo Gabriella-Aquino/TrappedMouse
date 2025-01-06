@@ -81,7 +81,6 @@
 #include <iostream>
 #include <string>
 #include <cstddef>
-#include <tuple>
 
 // Classe Cell
 class Cell {
@@ -107,13 +106,7 @@ public:
         }
         return *this;
     }
-    Cell& operator=(const std::tuple<int, int>new_value) {
-        if (this->getX() != std::get<0>(new_value), this->getY() != std::get<1>(new_value)) {
-            this->setX(std::get<0>(new_value));
-            this->setY(std::get<1>(new_value));
-        }
-        return *this;
-    }
+
     Cell &operator=(const std::pair<int, int> &new_value)
     {
         this->setX(new_value.first);
