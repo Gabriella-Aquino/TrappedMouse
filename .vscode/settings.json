@@ -44,5 +44,6 @@
     "chrono": "cpp",
     "ctime": "cpp",
     "ratio": "cpp"
-  }
+  },
+  "files.eol": "\n"
 }
