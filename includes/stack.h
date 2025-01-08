@@ -91,7 +91,7 @@ private:
 public:
     Cell() : pos_y(0), pos_x(0) {}
 
-    Cell(int x, int y) : pos_x(x), pos_y(y) {}
+    Cell(int x, int y) : pos_y(y), pos_x(x) {}
 
     int getX() const { return pos_x; }
     void setX(int pos_x){this->pos_x = pos_x;}
@@ -122,7 +122,7 @@ public:
     }
 
     friend std::ostream& operator<<(std::ostream& os, const Cell& pos) {
-        os << "[" << pos.getX() << ", " << pos.getY() << "]";
+        os << "[" << pos.getY() << ", " << pos.getX() << "]";
         return os;
     }
 };
@@ -140,7 +140,7 @@ template <typename T>
 class Stack {
 private:
     No<T>* topo;
-
+    int size = 0;
 public:
     Stack() : topo(nullptr) {}
 
@@ -151,6 +151,42 @@ public:
             topo = noAuxiliar;
         }
     }
+
+    Stack(const Stack& other) : topo(nullptr) {
+        Stack<T> temp_stack;
+        No<T>* noAuxiliar = other.topo;
+
+        while (noAuxiliar != nullptr) {
+            temp_stack.push(noAuxiliar->valor);
+            noAuxiliar = noAuxiliar->proximo;
+        }
+
+        while (!temp_stack.isEmpty()) {
+            this->push(temp_stack.top());
+            temp_stack.pop();
+        }
+    }
+
+    Stack& operator=(const Stack& other) {
+    if (this != &other) {
+        while (!this->isEmpty()) {
+            this->pop();
+        }
+        Stack<T> temp_stack;
+        No<T>* noAuxiliar = other.topo;
+
+        while (noAuxiliar != nullptr) {
+            temp_stack.push(noAuxiliar->valor);
+            noAuxiliar = noAuxiliar->proximo;
+        }
+        while (!temp_stack.isEmpty()) {
+            this->push(temp_stack.top());
+            temp_stack.pop();
+        }
+    }
+    return *this;
+}
+
 
     bool isEmpty() const {
         return (topo == nullptr);
@@ -166,6 +202,7 @@ public:
     void push(const T& item) {
         No<T>* novoNo = new No<T>(item, topo);
         topo = novoNo;
+        size++;
     }
 
     void pop() {
@@ -176,6 +213,11 @@ public:
         No<T>* noAuxiliar = topo;
         topo = topo->proximo;
         delete noAuxiliar;
+        size--;
+    }
+
+    int get_size() const {
+        return size;
     }
 
     void print() const {

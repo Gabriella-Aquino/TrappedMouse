@@ -53,7 +53,6 @@ int main()
   Cell c3;
   Cell c4;
   Cell c5;
-  tuple<int, int> new_tuple = {5, 5};
   pair<int, int> new_pair {5, 25};
 
   cout << "Antes da atribuição:" << endl;
@@ -61,15 +60,16 @@ int main()
   cout << "c2: " << c2 << endl;
 
   c1 = c2;
-  c3 = tuple<int, int>{8, 8};
   c4.assign(10, 5);
   c5 = new_pair;
+
+  Stack<Cell> pilha_copia = pilhaPosicao;
 
   cout << "\nDepois da atribuição:" << endl;
   cout << "c1: " << c1 << endl;
   cout << "c2: " << c2 << endl;
-  cout << "c3: " << c3 << endl;
   cout << "c4: " << c4 << endl;
   cout << "c5: " << c5 << endl;
+  pilha_copia.print();
   return 0;
 }
