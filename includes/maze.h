@@ -125,10 +125,6 @@ void Maze::printMaze(vector<vector<bool>> &maze_bool, Cell current_cell, bool is
       {
         cout << visited_print;
       }
-      else if (maze[row][col] == visited && row == num_rows - 1)
-      {
-        cout << try_error_print;
-      }
       else if (maze[row][col] == visited && is_last)
       {
         cout << try_error_print;
@@ -148,32 +144,28 @@ void Maze::printMaze(vector<vector<bool>> &maze_bool, Cell current_cell, bool is
 void Maze::printMazeLoop(Stack<Cell> path)
 {
   vector<vector<bool>> maze_bool(num_rows, vector<bool>(num_cols, false));
-  cout << entry_cell << endl;
-  printMaze(maze_bool, entry_cell, false);
-  cout << "" << endl;
-  this_thread::sleep_for(chrono::seconds(1));
   #ifdef _WIN32
     system("cls");
   #else
     system("clear");
   #endif
+  cout << entry_cell << endl;
+  printMaze(maze_bool, entry_cell, false);
+  this_thread::sleep_for(chrono::seconds(1));
+
 
   while (!path.isEmpty())
   {
+    #ifdef _WIN32
+    system("cls");
+    #else
+      system("clear");
+    #endif
     cout << path.top() << endl;
     bool is_last = path.get_size() == 1;
     printMaze(maze_bool, path.top(), is_last);
     path.pop();
-    cout << "" << endl;
-    
-    if(!is_last){
-      this_thread::sleep_for(chrono::seconds(1));
-      #ifdef _WIN32
-      system("cls");
-      #else
-        system("clear");
-      #endif
-    }
+    this_thread::sleep_for(chrono::seconds(1));
   }
 };
 
