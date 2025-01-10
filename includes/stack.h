@@ -1,80 +1,3 @@
-// #include <iostream>
-
-// struct No
-// {
-//   string valor;
-//   int pos_x;
-//   int pos_y;
-//   No *proximo;
-// };
-
-// class Stack
-// {
-// private:
-//   No *topo;
-
-// public:
-//   Stack();
-//   ~Stack();
-//   bool isEmpty();
-//   bool push(char item, int pos_x, int pos_y);
-//   No pop();
-//   void print();
-// };
-
-// Stack::Stack()
-// {
-//   topo = nullptr;
-// }
-
-// Stack::~Stack()
-// {
-//   while (topo != nullptr)
-//   {
-//     No* novoTopo = topo->proximo;
-//     No* topoAntigo = topo;
-//     topo = novoTopo;
-//     delete topoAntigo;
-//   }
-// }
-
-// bool Stack::isEmpty()
-// {
-//   return (topo == nullptr);
-// }
-
-// bool Stack::push(char item, int pos_x, int pos_y)
-// {
-//   No *novoNo = new No();
-//   novoNo->valor = item;
-//   novoNo->pos_x = pos_x;
-//   novoNo->pos_y = pos_y;
-//   novoNo->proximo = topo;
-//   topo = novoNo;
-// }
-// No Stack::pop()
-// {
-//   if (this->isEmpty())
-//   {
-//     std::cerr << "Erro: Pilha vazia" << std::endl;
-//   }else{
-//     No item = *topo;
-//     No* noAuxiliar = topo;
-//     topo = topo->proximo;
-//     delete noAuxiliar;
-//     return item;
-//   }
-// }
-// void Stack::print()
-// {
-//   No* noAuxiliar = topo;
-//   while (noAuxiliar != nullptr){
-//     std::printf("%c[%d][%d], ", noAuxiliar->valor, noAuxiliar->pos_x, noAuxiliar->pos_y);
-//     noAuxiliar = noAuxiliar->proximo;
-//   }
-//   std::cout << "" << std::endl;
-// }
-
 #ifndef STACK_H
 #define STACK_H
 
@@ -82,7 +5,6 @@
 #include <string>
 #include <cstddef>
 
-// Classe Cell
 class Cell {
 private:
     int pos_x;
@@ -233,7 +155,6 @@ public:
     }
 };
 
-// Especialização do método print para Stack<Cell>
 template <>
 void Stack<Cell>::print() const {
     No<Cell>* noAuxiliar = topo;

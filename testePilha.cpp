@@ -5,33 +5,6 @@ int main()
 {
   using namespace std;
 
-  //   Stack pilha;
-
-  //   pilha.print();
-
-  //   pilha.push('1', 1, 2);
-  //   pilha.push('2', 9, 2);
-  //   pilha.push('3', 7, 2);
-
-  //   cout << "pilha:" << endl;
-  //   pilha.print();
-
-  //   cout << "pop:" << endl;
-  //   pilha.pop();
-  //   pilha.print();
-
-  //   cout << "pop:" << endl;
-  //   pilha.pop();
-  //   pilha.print();
-
-  //   cout << "pop:" << endl;
-  //   pilha.pop();
-  //   pilha.print();
-
-  //   cout << "pop:" << endl;
-  //   pilha.pop();
-  //   pilha.print();
-
   Stack<std::string> pilhaString;
   pilhaString.push("Hello");
   pilhaString.push("World");
