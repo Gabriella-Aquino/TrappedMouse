@@ -5,6 +5,7 @@
 #include <string>
 #include "stack.h"
 #include <thread>
+#include <sstream>
 
 using namespace std;
 
@@ -16,6 +17,7 @@ private:
   int num_cols, num_rows;
   Stack<Cell> moves; // mazeStack
   vector<string> maze;
+  stringstream log;
 
 public:
   Maze(vector<string> maze, pair<int, int> pos_entry, pair<int, int> pos_exit, int num_cols, int num_rows);
@@ -27,6 +29,8 @@ public:
   void printMazeFile();
   void printMaze(vector<vector<bool>> &maze_bool, Cell current_cell, bool is_last);
   void printMazeLoop(const Stack<Cell> moves);
+  void logMenssage(const string& message);
+  void printLog();
 };
 
 Maze::Maze(vector<string> maze, pair<int, int> pos_entry, pair<int, int> pos_exit, int num_cols, int num_rows)
@@ -46,6 +50,10 @@ Maze::~Maze()
 vector<string> Maze::getMaze()
 {
   return maze;
+}
+
+void Maze:: logMenssage(const string& message){
+  log << message << endl;
 }
 
 void Maze::printMazeFile()
@@ -80,15 +88,14 @@ bool Maze::findPath(Cell current_cell)
     bool is_visited = maze[new_line][new_column] == visited;
     new_cell = {new_line, new_column};
 
-    // cout<< "current_cell: " << current_cell.getY() <<", " << current_cell.getX() << " ---- " <<maze[current_cell.getY()][current_cell.getX()] << endl;
-    // cout << "posicao em analise: " << new_line << ", " << new_column << " ---- " << maze[new_line][new_column] << endl;
-
+    logMenssage("\nposicao atual: " + to_string(current_cell.getY()) + ", " + to_string(current_cell.getX()) + " ---- " + string(1, maze[current_cell.getY()][current_cell.getX()]));
+    logMenssage("posicao em analise:" + to_string(new_line) + ", " + to_string(new_column) + " ---- " + string(1, maze[new_line][new_column]));
     if (is_path && !is_visited)
     {
-      // maze[current_cell.getY()][current_cell.getX()] = visited;
       Cell next_cell(new_column, new_line);
       moves.push(next_cell);
-      // cout << "entrou no if: " << next_cell.getY() << ", " << next_cell.getX() << endl;
+      logMenssage("entrou no if: " + to_string(next_cell.getY()) + ", " + to_string(next_cell.getX()));
+
 
       if (findPath(next_cell))
       {
@@ -99,6 +106,13 @@ bool Maze::findPath(Cell current_cell)
     }
   }
   return false;
+}
+
+void Maze::printLog(){
+  cout << "----------------" << endl;
+  cout << "DEBUG FIND PATH:" << endl;
+  cout << "----------------" << endl;
+  cout << log.str() << endl;
 }
 
 void Maze::printMaze(vector<vector<bool>> &maze_bool, Cell current_cell, bool is_last)

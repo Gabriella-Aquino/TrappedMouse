@@ -12,7 +12,7 @@ int main()
   try
   {
     auto start = high_resolution_clock::now();
-    Maze_data maze_file = readFile("input.txt");
+    Maze_data maze_file = readFile("mazes/input.txt");
     Maze maze(maze_file.maze, maze_file.entryPos, maze_file.exitPos, maze_file.width, maze_file.height);
 
     if (maze.getMaze().empty())
