@@ -18,7 +18,7 @@ int main()
     if (maze.getMaze().empty())
     {
       cerr << "Erro ao carregar a matriz." << endl;
-      return 1; // Retorna erro
+      return 1;
     }
 
     maze.exitMaze();
@@ -27,9 +27,9 @@ int main()
     auto duration = duration_cast<milliseconds>(end - start);
     cout << "Tempo de execução: " << duration.count() << " ms" << endl;
   }
-  catch (const std::runtime_error &e)
+  catch (const std::runtime_error &error)
   {
-    cerr << "Erro: " << e.what() << endl;
+    cerr << "Erro " << error.what() << endl;
     return 1;
   }
 

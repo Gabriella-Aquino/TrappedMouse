@@ -13,7 +13,7 @@ class Maze
 {
 private:
   Cell current_cell, exit_cell, entry_cell;
-  char exitMarker = 'e', entryMarker = 'm', visited = '.', passage = '0', wall = '1';
+  char exit_marker = 'e', entry_marker = 'm', visited = '.', passage = '0', wall = '1';
   int num_cols, num_rows;
   Stack<Cell> moves; // mazeStack
   vector<string> maze;
@@ -70,7 +70,7 @@ void Maze::printMazeFile()
 bool Maze::findPath(Cell current_cell)
 {
   vector<pair<int, int>> directions = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
-  if (maze[current_cell.getY()][current_cell.getX()] == exitMarker)
+  if (maze[current_cell.getY()][current_cell.getX()] == exit_marker)
   {
     return true;
   }
@@ -84,7 +84,7 @@ bool Maze::findPath(Cell current_cell)
     bool in_maze = (0 <= new_line && new_line < num_cols) && (0 <= new_column && new_column < num_rows);
     if (!in_maze)
       continue;
-    bool is_path = (maze[new_line][new_column] == passage) || (maze[new_line][new_column] == exitMarker);
+    bool is_path = (maze[new_line][new_column] == passage) || (maze[new_line][new_column] == exit_marker);
     bool is_visited = maze[new_line][new_column] == visited;
     new_cell = {new_line, new_column};
 
@@ -117,7 +117,7 @@ void Maze::printLog(){
 
 void Maze::printMaze(vector<vector<bool>> &maze_bool, Cell current_cell, bool is_last)
 {
-  char wall_print = '*', passage_print = ' ', visited_print = '.', mouse_print = 'o', try_error_print = 'x';
+  char wall_print = '*', passage_print = ' ', visited_print = '.', mouse_print = 'o', try_error_print = 'x', exit_print = '=';
   for (int row = 0; row < num_rows; row++)
   {
     for (int col = 0; col < num_cols; col++)
@@ -147,9 +147,9 @@ void Maze::printMaze(vector<vector<bool>> &maze_bool, Cell current_cell, bool is
       {
         cout << passage_print;
       }
-      else
+      else if(maze[row][col] == exit_marker)
       {
-        cout << maze[row][col];
+        cout << exit_print;
       }
     }
     cout << endl;
