@@ -61,13 +61,13 @@ Maze_data readFile(const string &fileName)
       if (character == 'm' || character == 'M')
       {
         character = tolower(character);
-        mazeData.entryPos = {rowCount+1, col+1};
+        mazeData.entryPos = {col + 1, rowCount + 1};
         mCount++;
       }
       if (character == 'e' || character == 'E')
       {
         character = tolower(character);
-        mazeData.exitPos = {rowCount+1, col+1};
+        mazeData.exitPos = {col+1, rowCount+1};
         eCount++;
       }
       if (validChars.find(character) == string::npos)

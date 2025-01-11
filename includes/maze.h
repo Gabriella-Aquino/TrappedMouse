@@ -6,8 +6,10 @@
 #include "stack.h"
 #include <thread>
 #include <sstream>
+#include <chrono>
 
 using namespace std;
+using namespace chrono;
 
 class Maze
 {
@@ -18,6 +20,8 @@ private:
   Stack<Cell> moves; // mazeStack
   vector<string> maze;
   stringstream log;
+  time_point<high_resolution_clock> start_time;
+  bool is_timing = false; 
 
 public:
   Maze(vector<string> maze, pair<int, int> pos_entry, pair<int, int> pos_exit, int num_cols, int num_rows);
@@ -69,12 +73,18 @@ void Maze::printMazeFile()
 }
 bool Maze::findPath(Cell current_cell)
 {
+  if (!is_timing) {
+    start_time = chrono::high_resolution_clock::now();
+    is_timing = true;
+  }
   vector<pair<int, int>> directions = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
   if (maze[current_cell.getY()][current_cell.getX()] == exit_marker)
   {
+    auto end_time = chrono::high_resolution_clock::now();
+    auto duration = duration_cast<milliseconds>(end_time - start_time);
+    logMenssage("\nTempo de execução do findPath: " + to_string(duration.count()) +  " ms");
     return true;
   }
-  maze[current_cell.getY()][current_cell.getX()] = visited;
   for (const auto &direction : directions)
   {
     pair<int, int> new_cell;
@@ -92,6 +102,7 @@ bool Maze::findPath(Cell current_cell)
     logMenssage("posicao em analise:" + to_string(new_line) + ", " + to_string(new_column) + " ---- " + string(1, maze[new_line][new_column]));
     if (is_path && !is_visited)
     {
+      maze[current_cell.getY()][current_cell.getX()] = visited;
       Cell next_cell(new_column, new_line);
       moves.push(next_cell);
       logMenssage("entrou no if: " + to_string(next_cell.getY()) + ", " + to_string(next_cell.getX()));
@@ -117,7 +128,7 @@ void Maze::printLog(){
 
 void Maze::printMaze(vector<vector<bool>> &maze_bool, Cell current_cell, bool is_last)
 {
-  char wall_print = '*', passage_print = ' ', visited_print = '.', mouse_print = 'o', try_error_print = 'x', exit_print = '=';
+  char wall_print = '|', passage_print = ' ', visited_print = '.', mouse_print = 'o', try_error_print = 'x', exit_print = '=';
   for (int row = 0; row < num_rows; row++)
   {
     for (int col = 0; col < num_cols; col++)
