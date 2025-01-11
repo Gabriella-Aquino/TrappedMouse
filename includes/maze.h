@@ -169,6 +169,9 @@ void Maze::printMaze(vector<vector<bool>> &maze_bool, Cell current_cell, bool is
 void Maze::printMazeLoop(Stack<Cell> path)
 {
   vector<vector<bool>> maze_bool(num_rows, vector<bool>(num_cols, false));
+  double animation_time = 5.0 / path.get_size();
+  animation_time = max(animation_time, 0.1);
+  animation_time = min(animation_time, 0.5);
   #ifdef _WIN32
     system("cls");
   #else
@@ -176,7 +179,7 @@ void Maze::printMazeLoop(Stack<Cell> path)
   #endif
   cout << entry_cell << endl;
   printMaze(maze_bool, entry_cell, false);
-  this_thread::sleep_for(chrono::seconds(1));
+  this_thread::sleep_for(chrono::milliseconds(static_cast<int>(animation_time * 1000)));
 
 
   while (!path.isEmpty())
@@ -190,7 +193,7 @@ void Maze::printMazeLoop(Stack<Cell> path)
     bool is_last = path.get_size() == 1;
     printMaze(maze_bool, path.top(), is_last);
     path.pop();
-    this_thread::sleep_for(chrono::seconds(1));
+    this_thread::sleep_for(chrono::milliseconds(static_cast<int>(animation_time * 1000)));
   }
 };
 
