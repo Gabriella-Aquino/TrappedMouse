@@ -82,7 +82,7 @@ bool Maze::findPath(Cell current_cell)
   {
     auto end_time = chrono::high_resolution_clock::now();
     auto duration = duration_cast<milliseconds>(end_time - start_time);
-    logMenssage("\nTempo de execução do findPath: " + to_string(duration.count()) +  " ms");
+    logMenssage("\nTempo de execução do findPath: " + to_string(duration.count()) +  " ms\nACHOU!");
     return true;
   }
   for (const auto &direction : directions)
@@ -91,6 +91,8 @@ bool Maze::findPath(Cell current_cell)
     int new_line = current_cell.getY() + direction.first;
     int new_column = current_cell.getX() + direction.second;
 
+    logMenssage("\nposicao atual: " + to_string(current_cell.getY()) + ", " + to_string(current_cell.getX()) + " ---- " + string(1, maze[current_cell.getY()][current_cell.getX()]));
+    logMenssage("posicao em analise:" + to_string(new_line) + ", " + to_string(new_column) + " ---- " + string(1, maze[new_line][new_column]));
     bool in_maze = (0 <= new_line && new_line < num_cols) && (0 <= new_column && new_column < num_rows);
     if (!in_maze)
       continue;
@@ -98,8 +100,6 @@ bool Maze::findPath(Cell current_cell)
     bool is_visited = maze[new_line][new_column] == visited;
     new_cell = {new_line, new_column};
 
-    logMenssage("\nposicao atual: " + to_string(current_cell.getY()) + ", " + to_string(current_cell.getX()) + " ---- " + string(1, maze[current_cell.getY()][current_cell.getX()]));
-    logMenssage("posicao em analise:" + to_string(new_line) + ", " + to_string(new_column) + " ---- " + string(1, maze[new_line][new_column]));
     if (is_path && !is_visited)
     {
       maze[current_cell.getY()][current_cell.getX()] = visited;
@@ -124,6 +124,7 @@ void Maze::printLog(){
   cout << "DEBUG FIND PATH:" << endl;
   cout << "----------------" << endl;
   cout << log.str() << endl;
+  moves.print();
 }
 
 void Maze::printMaze(vector<vector<bool>> &maze_bool, Cell current_cell, bool is_last)
