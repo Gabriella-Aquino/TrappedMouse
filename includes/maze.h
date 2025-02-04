@@ -94,6 +94,8 @@ bool Maze::findPath(Cell current_cell)
     logMenssage("\nposicao atual: " + to_string(current_cell.getY()) + ", " + to_string(current_cell.getX()) + " ---- " + string(1, maze[current_cell.getY()][current_cell.getX()]));
     logMenssage("posicao em analise:" + to_string(new_line) + ", " + to_string(new_column) + " ---- " + string(1, maze[new_line][new_column]));
     bool in_maze = (0 <= new_line && new_line < num_cols) && (0 <= new_column && new_column < num_rows);
+    maze[current_cell.getY()][current_cell.getX()] = visited;
+
     if (!in_maze)
       continue;
     bool is_path = (maze[new_line][new_column] == passage) || (maze[new_line][new_column] == exit_marker);
@@ -102,7 +104,6 @@ bool Maze::findPath(Cell current_cell)
 
     if (is_path && !is_visited)
     {
-      maze[current_cell.getY()][current_cell.getX()] = visited;
       Cell next_cell(new_column, new_line);
       moves.push(next_cell);
       logMenssage("entrou no if: " + to_string(next_cell.getY()) + ", " + to_string(next_cell.getX()));
@@ -114,6 +115,7 @@ bool Maze::findPath(Cell current_cell)
       }
 
       moves.pop();
+      logMenssage("pop");
     }
   }
   return false;
